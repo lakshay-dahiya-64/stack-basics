@@ -1,0 +1,281 @@
+#include <iostream>
+using namespace std;
+
+//stack class
+
+class stack{
+
+//stack properties
+
+    public:
+    int *arr;
+    int size;
+    int top;
+
+//stack constructor
+
+    stack(int size){
+      arr=new int[size];
+      this->size=size;
+      top=-1;
+    }
+
+//stack behaviours
+
+//push function to stack
+   void push(int data){
+     if(size-top>1){
+       top++;
+      arr[top]=data;
+     }
+     else{
+      cout<<"stack overflow"<<endl;
+     }
+     }
+
+     //pop function to remove element from stack
+   void pop(){
+    if(top==-1){
+      cout<<"stack underflow"<<endl;
+    }
+    else{
+      top--;
+    }
+   }
+
+   //gettop function to get the top most element of the stack
+   int gttop(){
+    if(top==-1){
+      cout<<"stack is empty";
+    }
+    else
+    return arr[top];
+   }
+
+   //function to check wether the stack is empty or not
+   bool empty(){
+    if(top==-1){
+      return true;
+    }
+    else{
+      return false;
+    }
+   }
+
+   //function to get the total elements of the stack
+   int totalelements(stack s){
+    int count = 0;
+    while(!s.empty()){
+      count++;
+       s.pop();
+    }
+    return count;
+   }
+
+//function to print the elements of stack
+   void print(stack a){
+    if(a.empty()){
+    cout<<"stack is empty"<<endl;
+   }
+   else{
+    while(!a.empty()){
+      cout<<endl;
+     cout<<a.gttop();
+     
+    a.pop();
+     
+    }}
+   }
+};
+
+//double stack
+
+class doublestack{
+  public:
+int *arr;
+int top1;
+int top2;
+int size;
+
+//doublestack constructor
+
+doublestack(int size){
+  arr=new int[size];
+  this->size=size;
+  top1=-1;
+  top2=size;
+}
+
+//behaviour of class doublestack
+
+void push1(int data){
+  if(top2-top1>1){
+    top1++;
+    arr[top1]=data;}
+    else{
+      cout<<"stack 1 overflow"<<endl;
+    }
+  }
+  void push2(int data){
+    if(top2-top1>1){
+      top2--;
+      arr[top2]=data;
+    }
+    else{
+      cout<<"stack 2 overflow"<<endl;
+    }
+  }
+  void pop1(){
+    if(top1==-1){
+      cout<<"stack 1 underflow"<<endl;
+    }
+    else{
+      arr[top1]=0;
+      top1--;
+    }
+  }
+  
+  void pop2(){
+    if(top2==size){
+      cout<<"stack 2 underflow"<<endl;
+    }
+    else{
+      arr[top2]=0;
+      top2--;
+    }
+  }
+
+  int gettop1(){
+   if(top1==-1){
+    cout<<"stack1 is empty"<<endl;
+   }
+   else{
+     return arr[top1];
+   }
+  }
+  int gettop2(){
+    if(top2==size){
+      cout<<"stack 2 is empty"<<endl;
+    }
+    else{
+      return arr[top2];
+    }
+  }
+
+  bool isempty1(){
+    if(top1==-1){
+      return true;
+    }
+    else {
+      return false;
+    }
+
+  }
+
+  bool isempty2(){
+    if(top2==size){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+
+  void print(){
+    for(int i=0;i<size;i++){
+     
+    cout<<arr[i]<<" ";
+   }
+  cout<<endl;}
+  
+
+};
+
+//function for inserting element at middle
+
+void insertatmiddle(stack &s,int &middle,int data){
+  cout<<"in the function call "<<endl;
+  cout<<"middle is "<<middle<<endl;
+   cout<<s.totalelements(s)<<" total elemenst"<<endl;
+  if(s.totalelements(s)==middle){
+    s.push(data);
+     return;
+  }
+
+  else{
+   int temp= s.gttop();
+  
+   s.pop();
+   insertatmiddle(s,middle,data);
+   s.push(temp);
+
+  }
+
+ 
+}
+
+//function for inserting element at bottom
+
+void insertatbottom(stack &s,int data){
+  if(s.empty()){
+    s.push(data);
+    return;
+  }
+  else{
+    int temp=s.gttop();
+    s.pop();
+    insertatbottom(s,data);
+    s.push(temp);
+  }
+}
+
+void reversestack(stack &s){
+if(s.empty()){
+  return;
+}
+else{
+  int temp=s.gttop();
+  s.pop();
+  reversestack(s);
+  insertatbottom(s,temp);
+}
+
+}
+
+int main(){
+    stack a(6);
+    a.push(10);
+    a.push(20);
+    a.push(30);
+    a.push(40);
+    a.push(50);
+    a.push(60);
+   
+  //  cout<<endl<<"total elements are "<<a.totalelements(a)<<endl;
+  //  int size=a.totalelements(a);
+  //  int middle=size/2+1;
+  //  cout<<"middle at the starting is "<<middle<<endl;
+  //   insertatmiddle(a,middle,35);
+
+  // insertatbottom(a,0);
+  // a.print(a);
+
+  reversestack(a);
+
+  a.print(a);
+  
+  // doublestack s(10);
+  // s.push1(30);
+  // s.push1(40);
+  // s.push2(80);
+  // s.push2(10);
+  // s.print();
+  // if(s.isempty1()){
+  //   cout<<"true"<<endl;
+  // }
+  // else{
+  //   cout<<"false"<<endl;
+  // }
+   return 0;
+}
+
